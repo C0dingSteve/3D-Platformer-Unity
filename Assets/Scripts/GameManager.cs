@@ -8,7 +8,8 @@ public class GameManager : HealthEventSubscriber
     [SerializeField] private UIManager _uiManager;
     [SerializeField] private HealthManager _healthManger;
 
-    private Vector3 _respawnPoint;
+    [SerializeField] private int _money = 0;
+    [SerializeField] private Vector3 _respawnPoint;
 
     private void Awake()
     {
@@ -32,11 +33,18 @@ public class GameManager : HealthEventSubscriber
         _respawnPoint = PlayerController.Instance.transform.position;
 
         _uiManager.UpdateUIHealth(_healthManger.MaxHealth);
+        _uiManager.UpdateUIMoney(_money);
     }
 
     public void SetSpawnPoint(Vector3 spawnPoint)
     {
         _respawnPoint = spawnPoint;
+    }
+
+    public void AddMoney(int money)
+    {
+        _money += money;
+        _uiManager.UpdateUIMoney(_money);
     }
 
     // protected override void HandleDeath()

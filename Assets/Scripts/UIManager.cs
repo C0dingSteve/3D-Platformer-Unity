@@ -6,7 +6,8 @@ public class UIManager : HealthEventSubscriber
 {
     [SerializeField] private Image _blackScreen;
     [SerializeField] private float _fadeDuration = 2f;
-    [SerializeField] private TMP_Text healthText;
+    [SerializeField] private TMP_Text _healthText;
+    [SerializeField] private TMP_Text _moneyText;
 
     private TimedAction _screenFadeAction;
 
@@ -56,6 +57,11 @@ public class UIManager : HealthEventSubscriber
 
     public void UpdateUIHealth(int health)
     {
-        healthText.text = health.ToString();
+        _healthText.text = $"{health}/{HealthManager.Instance.MaxHealth}";
+    }
+
+    public void UpdateUIMoney(int money)
+    {
+        _moneyText.text = money.ToString();
     }
 }
