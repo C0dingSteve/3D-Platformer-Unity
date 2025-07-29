@@ -12,8 +12,8 @@ public class Checkpoint : MonoBehaviour
 
     private void Activate()
     {
-        SendMessageUpwards(nameof(CheckpointManager.DeactivateAllCheckpoints), SendMessageOptions.RequireReceiver);
-        _pfx?.SetActive(true); // Must be after SendMessageUpwards
+        SendMessageUpwards(nameof(PlayerSpawnManager.DeactivateAllCheckpoints), SendMessageOptions.RequireReceiver);
+        _pfx?.SetActive(true); // After SendMessageUpwards, need to overwrite to activate the real checkpoint
 
         GameManager.Instance?.SetSpawnPoint(transform.position);
     }

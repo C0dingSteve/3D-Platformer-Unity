@@ -22,13 +22,7 @@ public abstract class PickupItem : MonoBehaviour
     {
         while (_canSpin)
         {
-            // Needs fixing, doesn't work with the CoinPickup
-            // Likely cos of it's bigger scale
-            transform.rotation = Quaternion.Euler(
-                transform.rotation.eulerAngles.x,
-                transform.rotation.eulerAngles.y + _spinSpeed * Time.deltaTime,
-                transform.rotation.eulerAngles.z
-            );
+            transform.Rotate(Vector3.up * Time.deltaTime * _spinSpeed);
             yield return null;
         }
     }

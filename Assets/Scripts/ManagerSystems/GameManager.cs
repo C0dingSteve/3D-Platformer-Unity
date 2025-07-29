@@ -1,15 +1,9 @@
 using System.Collections;
 using UnityEngine;
 
-public class GameManager : HealthEventSubscriber
+public class GameManager: MonoBehaviour
 {
     public static GameManager Instance;
-
-    [SerializeField] private UIManager _uiManager;
-    [SerializeField] private HealthManager _healthManger;
-
-    [SerializeField] private int _money = 0;
-    [SerializeField] private Vector3 _respawnPoint;
 
     private void Awake()
     {
@@ -25,12 +19,18 @@ public class GameManager : HealthEventSubscriber
         }
     }
 
+    [SerializeField] private int _money = 0;
+
+    [SerializeField] private UIManager _uiManager;
+    [SerializeField] private HealthManager _healthManger;
+    [SerializeField] private PlayerSpawnManager _playerSpawnManager;
+
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
-        _respawnPoint = PlayerController.Instance.transform.position;
+        _playerSpawnManager.SpawnPoint = PlayerController.Instance.transform.position;
 
         _uiManager.UpdateUIHealth(_healthManger.MaxHealth);
         _uiManager.UpdateUIMoney(_money);
@@ -38,7 +38,7 @@ public class GameManager : HealthEventSubscriber
 
     public void SetSpawnPoint(Vector3 spawnPoint)
     {
-        _respawnPoint = spawnPoint;
+        _playerSpawnManager.SpawnPoint = spawnPoint;
     }
 
     public void AddMoney(int money)
@@ -46,12 +46,6 @@ public class GameManager : HealthEventSubscriber
         _money += money;
         _uiManager.UpdateUIMoney(_money);
     }
-
-    // protected override void HandleDeath()
-    // {
-    //     Debug.Log(gameObject.name);
-    //     StartCoroutine(RespawnCo());
-    // }
 
     public void Respawn()
     {
@@ -68,7 +62,7 @@ public class GameManager : HealthEventSubscriber
 
         _healthManger.ResetHealth();
 
-        PlayerController.Instance.transform.position = _respawnPoint;
+        PlayerController.Instance.transform.position = _playerSpawnManager.SpawnPoint;
         CameraController.Instance.CMBrain.enabled = true;
         PlayerController.Instance.gameObject.SetActive(true);
     }

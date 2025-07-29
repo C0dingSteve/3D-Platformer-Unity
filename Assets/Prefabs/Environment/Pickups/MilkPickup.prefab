@@ -150,7 +150,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abe4cf32140577842ae60fe3834a2aaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _pickUpName: Pickup Item
+  _pickUpName: Milk
   _destroyFX: {fileID: 2930219811199985422, guid: 875ba3f38d00ebb40bd6a3d37d70e91c, type: 3}
   _activeFX: {fileID: 0}
   _canSpin: 1

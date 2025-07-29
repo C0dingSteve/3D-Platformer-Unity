@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(HealthManager))]
-public class PlayerDeathHandler : HealthEventSubscriber
+public class DeathHandler : HealthEventSubscriber
 {
     [SerializeField] private GameObject _playerDeathFX;
     private InvincibilityEffect _invincibilityEffect;
