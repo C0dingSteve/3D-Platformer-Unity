@@ -1,9 +1,12 @@
 using UnityEngine;
 
-public class CheckpointManager : MonoBehaviour
+public class PlayerSpawnManager : MonoBehaviour
 {
+    public Vector3 SpawnPoint { get; set; } = Vector3.zero;
+
     private Checkpoint[] _checkpoints;
-    void Start()
+
+    private void Awake()
     {
         _checkpoints = gameObject.GetComponentsInChildren<Checkpoint>();
         if (_checkpoints.Length <= 0) Debug.Log("No checkpoints found");
