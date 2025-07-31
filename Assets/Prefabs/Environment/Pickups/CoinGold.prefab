@@ -151,9 +151,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdd5b8599516d564182f397f600b0424, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _pickUpName: Coin
+  <PickupType>k__BackingField: Money Pickup
   _destroyFX: {fileID: 2930219811199985422, guid: 875ba3f38d00ebb40bd6a3d37d70e91c, type: 3}
   _activeFX: {fileID: 0}
   _canSpin: 1
-  _spinSpeed: 1
+  _spinSpeed: 35
   _amount: 5
