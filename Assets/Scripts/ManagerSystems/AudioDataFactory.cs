@@ -10,22 +10,35 @@ public class AudioDataFactory : MonoBehaviour
     [SerializeField] private string _audioDataFolder = "Assets/AudioData";
     public string AudioDataFolder => _audioDataFolder;
 
-    [ContextMenu("Create AudioData Assets")]
-    public void CreateAudioDataAssets()
+    private string[] guids;
+
+    private void LoadAudioClips()
     {
         if (!Directory.Exists(MusicFolder))
-            throw new DirectoryNotFoundException($"Music folder not found: {MusicFolder}");
+        {
+            Debug.LogWarning($"Musc Folder not Found: {MusicFolder}");
+            return;
+        }
 
         if (!Directory.Exists(SfxFolder))
-            throw new DirectoryNotFoundException($"sfx folder nor found: {SfxFolder}");
+        {
+            Debug.LogWarning($"SFX Folder not found: {SfxFolder}");
+            return;
+        }
 
-        string[] guids = AssetDatabase.FindAssets("t:AudioClip", new[] { MusicFolder, SfxFolder });
+        guids = AssetDatabase.FindAssets("t:AudioClip", new[] { MusicFolder, SfxFolder });
 
         if (!Directory.Exists(_audioDataFolder))
         {
             Directory.CreateDirectory(_audioDataFolder);
             AssetDatabase.Refresh();
         }
+    }
+
+    [ContextMenu("Create AudioData Assets")]
+    public void CreateAudioDataAssets()
+    {
+        LoadAudioClips();
 
         foreach (string guid in guids)
         {
