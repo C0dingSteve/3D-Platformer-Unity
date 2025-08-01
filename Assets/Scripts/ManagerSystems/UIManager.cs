@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Assets.Scripts.Utility;
 
 public class UIManager : HealthEventSubscriber
 {
@@ -16,7 +17,7 @@ public class UIManager : HealthEventSubscriber
     void Start()
     {
         _screenFadeAction = gameObject.AddComponent<TimedAction>();
-        NullChecker.Check(_screenFadeAction);
+        _screenFadeAction.LogNullStatus();
 
         _screenColor = _blackScreen.color;
     }

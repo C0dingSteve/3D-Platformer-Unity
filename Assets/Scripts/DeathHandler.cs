@@ -1,4 +1,5 @@
 using UnityEngine;
+using Assets.Scripts.Utility;
 
 [RequireComponent(typeof(HealthManager))]
 public class DeathHandler : HealthEventSubscriber
@@ -10,10 +11,10 @@ public class DeathHandler : HealthEventSubscriber
     private void Awake()
     {
         _invincibilityEffect = GetComponent<InvincibilityEffect>();
-        NullChecker.Check(_invincibilityEffect);
+        _invincibilityEffect.LogNullStatus();
 
         _healthManager = GetComponent<HealthManager>();
-        NullChecker.Check(_healthManager);
+        _healthManager.LogNullStatus();
     }
 
     void OnTriggerEnter(Collider coll)

@@ -2,52 +2,55 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-public class TimedAction : MonoBehaviour
+namespace Assets.Scripts.Utility
 {
-    public bool IsActive { get; private set; } = false;
-
-    private Coroutine _currentActionCo;
-
-    public void RunAction(float duration, Action actionPerFrame = null, Action actionOnCompletion = null)
+    public class TimedAction : MonoBehaviour
     {
-        if (IsActive) return;
+        public bool IsActive { get; private set; } = false;
 
-        duration = Mathf.Max(duration, 0);
-        _currentActionCo = StartCoroutine(ActionCo(duration, actionPerFrame, actionOnCompletion));
-    }
+        private Coroutine _currentActionCo;
 
-    public void StopAction()
-    {
-        if (_currentActionCo != null)
+        public void RunAction(float duration, Action actionPerFrame = null, Action actionOnCompletion = null)
         {
-            StopCoroutine(_currentActionCo);
-            _currentActionCo = null;
-            IsActive = false;
+            if (IsActive) return;
+
+            duration = Mathf.Max(duration, 0);
+            _currentActionCo = StartCoroutine(ActionCo(duration, actionPerFrame, actionOnCompletion));
         }
-    }
 
-    private IEnumerator ActionCo(float duration, Action actionPerFrame = null, Action actionOnCompletion = null)
-    {
-        IsActive = true;
-        float _timeRemaining = duration;
-
-        try
+        public void StopAction()
         {
-            while (_timeRemaining > 0)
+            if (_currentActionCo != null)
             {
-                _timeRemaining -= Time.deltaTime;
-                actionPerFrame?.Invoke();
-                yield return null;
+                StopCoroutine(_currentActionCo);
+                _currentActionCo = null;
+                IsActive = false;
             }
-
-            _timeRemaining = 0;
-
-            actionOnCompletion?.Invoke();
         }
-        finally
+
+        private IEnumerator ActionCo(float duration, Action actionPerFrame = null, Action actionOnCompletion = null)
         {
-            IsActive = false;
-            _currentActionCo = null;
+            IsActive = true;
+            float _timeRemaining = duration;
+
+            try
+            {
+                while (_timeRemaining > 0)
+                {
+                    _timeRemaining -= Time.deltaTime;
+                    actionPerFrame?.Invoke();
+                    yield return null;
+                }
+
+                _timeRemaining = 0;
+
+                actionOnCompletion?.Invoke();
+            }
+            finally
+            {
+                IsActive = false;
+                _currentActionCo = null;
+            }
         }
     }
 }

@@ -10,59 +10,65 @@ public class AudioDataFactory : MonoBehaviour
     [SerializeField] private string _audioDataFolder = "Assets/AudioData";
     public string AudioDataFolder => _audioDataFolder;
 
-    private string[] guids;
+    private string[] audioClipGUIDs;
 
-    private void LoadAudioClips()
+    private bool LoadAudioClips()
     {
+        audioClipGUIDs = new string[0];
+
         if (!Directory.Exists(MusicFolder))
         {
-            Debug.LogWarning($"Musc Folder not Found: {MusicFolder}");
-            return;
+            Debug.LogWarning($"Music Folder not Found: {MusicFolder}");
+            return false;
         }
 
         if (!Directory.Exists(SfxFolder))
         {
             Debug.LogWarning($"SFX Folder not found: {SfxFolder}");
-            return;
+            return false;
         }
 
-        guids = AssetDatabase.FindAssets("t:AudioClip", new[] { MusicFolder, SfxFolder });
+        audioClipGUIDs = AssetDatabase.FindAssets("t:AudioClip", new[] { MusicFolder, SfxFolder });
 
         if (!Directory.Exists(_audioDataFolder))
         {
             Directory.CreateDirectory(_audioDataFolder);
             AssetDatabase.Refresh();
         }
+
+        return true;
     }
 
     [ContextMenu("Create AudioData Assets")]
     public void CreateAudioDataAssets()
     {
-        LoadAudioClips();
-
-        foreach (string guid in guids)
+        if (LoadAudioClips())
         {
-            string assetPath = AssetDatabase.GUIDToAssetPath(guid);
-            AudioClip audioClip = AssetDatabase.LoadAssetAtPath<AudioClip>(assetPath);
+            foreach (string guid in audioClipGUIDs)
+            {
+                string clipPath = AssetDatabase.GUIDToAssetPath(guid);
+                AudioClip clip = AssetDatabase.LoadAssetAtPath<AudioClip>(clipPath);
 
-            if (AssetDatabase.LoadAssetAtPath<AudioData>($"{_audioDataFolder}/{audioClip.name}.asset") != null) continue;
+                string audioDataPath = Path.Combine(_audioDataFolder, $"{clip.name}.asset");
 
-            AudioData audioData = ScriptableObject.CreateInstance<AudioData>();
-            audioData.audioClip = audioClip;
-            audioData.name = audioClip.name;
+                if (AssetDatabase.LoadAssetAtPath<AudioData>(audioDataPath) != null) continue;
 
-            if (assetPath.StartsWith(MusicFolder))
-                audioData.audioType = AudioClipType.BACKGROUND;
-            else if (assetPath.StartsWith(SfxFolder))
-                audioData.audioType = AudioClipType.SFX;
+                AudioData audioData = ScriptableObject.CreateInstance<AudioData>();
+                audioData.audioClip = clip;
+                audioData.name = clip.name;
 
-            // Create the asset in the specified folder
-            string audioDataPath = $"Assets/AudioData/{audioData.name}.asset";
-            AssetDatabase.CreateAsset(audioData, audioDataPath);
+                if (clipPath.StartsWith(MusicFolder))
+                    audioData.audioType = AudioClipType.BACKGROUND;
+                else if (clipPath.StartsWith(SfxFolder))
+                    audioData.audioType = AudioClipType.SFX;
+
+                // Create the asset in the specified folder
+                AssetDatabase.CreateAsset(audioData, audioDataPath);
+            }
+
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
+            Debug.Log("AudioData assets created successfully!");
         }
-
-        AssetDatabase.SaveAssets();
-        AssetDatabase.Refresh();
-        Debug.Log("AudioData assets created successfully!");
     }
 }

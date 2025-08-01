@@ -1,33 +1,14 @@
 using UnityEngine;
 
-public abstract class NullChecker
+namespace Assets.Scripts.Utility
 {
-    public static bool verbose = false;
-
-    public static bool Check(Object obj)
+    public static class NullChecker
     {
-        string objectType = obj != null ? obj.GetType().Name : "null";
-
-        if (obj == null)
+        public static T IsNull<T>(this T obj) where T : Object => obj ? obj : null;
+        public static void LogNullStatus<T>(this T obj) where T : Object
         {
-            Debug.Log($"{objectType} is null");
-            return true;
+            if (obj == null) Debug.Log($"{obj} is null");
+            else Debug.Log($"{obj} is not null");
         }
-        else
-        {
-            if(verbose == true)
-                Debug.Log($"{objectType} is not null");
-            return false;
-        }
-    }
-
-    public static bool Check(GameObject gameObject)
-    {
-        return Check(gameObject as Object);
-    }
-
-    public static bool Check(Component component)
-    {
-        return Check(component as Object);
     }
 }

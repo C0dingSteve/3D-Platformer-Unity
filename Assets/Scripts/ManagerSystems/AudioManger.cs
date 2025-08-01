@@ -16,6 +16,4 @@ public class AudioManger : MonoBehaviour
         Object[] _tempList = AssetDatabase.LoadAllAssetsAtPath(_audioDataFactory.AudioDataFolder);
         _audioDataList = _tempList.OfType<AudioData>().ToArray();
     }
-
-
 }

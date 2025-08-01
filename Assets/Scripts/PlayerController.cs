@@ -1,4 +1,5 @@
 using UnityEngine;
+using Assets.Scripts.Utility;
 
 public class PlayerController : MonoBehaviour
 {
@@ -37,11 +38,11 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         _charController = GetComponent<CharacterController>();
-        NullChecker.Check(_charController);
+        _charController.LogNullStatus();
 
         _knockBackTimedAction = gameObject.AddComponent<TimedAction>();
-        NullChecker.Check(_knockBackTimedAction);
-        
+        _knockBackTimedAction.LogNullStatus();
+
         _moveDirection = Vector3.zero;
 
         _cam = Camera.main;
