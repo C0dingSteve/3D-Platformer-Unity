@@ -2016,19 +2016,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 338131050529533383, guid: 636158fa986f83240b57f0b80fab50ab, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.94630814
       objectReference: {fileID: 0}
     - target: {fileID: 338131050529533383, guid: 636158fa986f83240b57f0b80fab50ab, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: 0.32326606
       objectReference: {fileID: 0}
     - target: {fileID: 338131050529533383, guid: 636158fa986f83240b57f0b80fab50ab, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0.0000000398839
       objectReference: {fileID: 0}
     - target: {fileID: 338131050529533383, guid: 636158fa986f83240b57f0b80fab50ab, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: 0.000000013624644
       objectReference: {fileID: 0}
     - target: {fileID: 1240240510684673298, guid: 636158fa986f83240b57f0b80fab50ab, type: 3}
       propertyPath: m_Follow

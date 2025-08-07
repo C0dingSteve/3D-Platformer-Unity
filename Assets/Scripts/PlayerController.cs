@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _rotateSpeed;
     [SerializeField] private float _jumpForce;
     [SerializeField] private float _gravityModifier;
+    [SerializeField] private float _gravityWhenGrounded; // Must be negative
 
     private Vector3 _moveDirection;
 
@@ -79,6 +80,7 @@ public class PlayerController : MonoBehaviour
             {
                 _moveDirection.y = _jumpForce;
             }
+            else _moveDirection.y = _gravityWhenGrounded;
         }
         else
         {
