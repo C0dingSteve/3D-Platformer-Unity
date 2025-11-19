@@ -36,15 +36,8 @@ public class HealthManager: MonoBehaviour
     {
         _currentHealth = Mathf.Clamp(_currentHealth - damageAmount, 0, _maxHealth);
 
-        if (_currentHealth <= 0)
-        {
-            Kill();
-        }
-        else
-        {
-            // Notify subscribers that the player took some damage
-            OnDamaged?.Invoke(_currentHealth);
-        }
+        if (_currentHealth <= 0) Kill();
+        else OnDamaged?.Invoke(_currentHealth); // Notify subscribers player took damage
     }
 
     public void Kill()

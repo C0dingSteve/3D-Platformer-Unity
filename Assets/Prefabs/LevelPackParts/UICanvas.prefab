@@ -295,7 +295,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6055628631390009120}
   m_Layer: 5
-  m_Name: Coins
+  m_Name: CoinsHUD
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -441,7 +441,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _blackScreen: {fileID: 1300301336737496527}
   _fadeDuration: 2
-  healthText: {fileID: 3477170074884777160}
+  _healthText: {fileID: 3477170074884777160}
+  _moneyText: {fileID: 1190478935425149754}
 --- !u!1 &8500378549452262040
 GameObject:
   m_ObjectHideFlags: 0

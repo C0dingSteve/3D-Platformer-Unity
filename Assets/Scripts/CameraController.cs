@@ -19,8 +19,5 @@ public class CameraController : MonoBehaviour
         }
     }
 
-    private void Start()
-    {
-        CMBrain = GetComponent<CinemachineBrain>();
-    }
+    private void Start() => CMBrain = GetComponent<CinemachineBrain>();
 }
