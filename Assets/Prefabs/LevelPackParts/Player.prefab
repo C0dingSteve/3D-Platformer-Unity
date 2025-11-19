@@ -1318,6 +1318,7 @@ MonoBehaviour:
   _rotateSpeed: 15
   _jumpForce: 10
   _gravityModifier: 5
+  _gravityWhenGrounded: -1
   _playerModel: {fileID: 4523950902191471462}
   _animator: {fileID: 5245486812472086786}
   _knockBackDuration: 1

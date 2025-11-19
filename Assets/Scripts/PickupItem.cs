@@ -3,7 +3,8 @@ using UnityEngine;
 
 public abstract class PickupItem : MonoBehaviour
 {
-    [SerializeField] private string _pickUpName = "Pickup Item";
+    [field: SerializeField]
+    public string PickupType { get; protected set; }
 
     [SerializeField] protected GameObject _destroyFX;
     

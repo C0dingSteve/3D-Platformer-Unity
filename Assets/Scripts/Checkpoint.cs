@@ -18,8 +18,5 @@ public class Checkpoint : MonoBehaviour
         GameManager.Instance?.SetSpawnPoint(transform.position);
     }
 
-    public void Deactivate()
-    {
-        _pfx?.SetActive(false);
-    }
+    public void Deactivate() => _pfx?.SetActive(false);
 }

@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using Assets.Scripts.Utility;
 
 public class InvincibilityEffect : HealthEventSubscriber
 {
@@ -17,10 +18,10 @@ public class InvincibilityEffect : HealthEventSubscriber
     private void Awake()
     {
         _invincibilityTimedAction = gameObject.AddComponent<TimedAction>();
-        NullChecker.Check(_invincibilityTimedAction);
+        _invincibilityTimedAction.LogNullStatus();
 
         _playerController = GetComponent<PlayerController>();
-        NullChecker.Check(_playerController);
+        _playerController.LogNullStatus();
     }
 
     public void ActivateEffect()

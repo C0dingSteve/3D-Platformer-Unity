@@ -1,4 +1,4 @@
-using UnityEngine;
+using Assets.Scripts.Utility;
 
 public class HealEffect : HealthEventSubscriber
 {
@@ -7,7 +7,7 @@ public class HealEffect : HealthEventSubscriber
     void Awake()
     {
         _healAction = gameObject.AddComponent<TimedAction>();
-        NullChecker.Check(_healAction);
+        _healAction.LogNullStatus();
     }
 
     protected override void HandleHealing(int health)

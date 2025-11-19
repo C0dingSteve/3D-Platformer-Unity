@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Assets.Scripts.Utility;
 
 public class UIManager : HealthEventSubscriber
 {
@@ -13,10 +14,12 @@ public class UIManager : HealthEventSubscriber
 
     private Color _screenColor;
 
-    void Start()
+    // Changing this to Start probably causes initialization
+    // order problem with HealthEventSubscriber - NEED FIXING 
+    void Awake()  
     {
         _screenFadeAction = gameObject.AddComponent<TimedAction>();
-        NullChecker.Check(_screenFadeAction);
+        _screenFadeAction.LogNullStatus();
 
         _screenColor = _blackScreen.color;
     }
@@ -28,35 +31,21 @@ public class UIManager : HealthEventSubscriber
 
         _screenFadeAction.RunAction(_fadeDuration, () =>
             {
-                if (_fadeProgression < _halfDuration)
-                    _screenColor.a = Mathf.MoveTowards(_screenColor.a, 1f, _halfDuration * Time.deltaTime);
-                else
-                    _screenColor.a = Mathf.MoveTowards(_screenColor.a, 0f, _halfDuration * Time.deltaTime);
-
+                float targetAlpha = (_fadeProgression < _halfDuration) ? 1f:0f;
+                _screenColor.a = Mathf.MoveTowards(_screenColor.a, targetAlpha, _halfDuration * Time.deltaTime);
                 _blackScreen.color = _screenColor;
-
                 _fadeProgression += Time.deltaTime * _halfDuration;
             }
         );
     }
 
-    protected override void HandleDamage(int health)
-    {
-        UpdateUIHealth(health);
-    }
-
-    protected override void HandleHealing(int health)
-    {
-        UpdateUIHealth(health);
-    }
-
-    protected override void HandleDeath()
-    {
-        UpdateUIHealth(0);
-    }
+    protected override void HandleDamage(int health) => UpdateUIHealth(health);
+    protected override void HandleHealing(int health) => UpdateUIHealth(health);
+    protected override void HandleDeath() => UpdateUIHealth(0);
 
     public void UpdateUIHealth(int health)
     {
+        Debug.Log(health/HealthManager.Instance.MaxHealth);
         _healthText.text = $"{health}/{HealthManager.Instance.MaxHealth}";
     }
 

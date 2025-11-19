@@ -1,3 +1,4 @@
+using Assets.Scripts.Utility;
 using UnityEngine;
 
 public class DamagingEntity : MonoBehaviour
@@ -7,8 +8,8 @@ public class DamagingEntity : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             DamageableEntity obj = other.GetComponent<DamageableEntity>();
-            NullChecker.Check(obj);
-            obj?.ApplyDamage(1);
+            if (obj.IsNull() != null) obj.ApplyDamage(1);
+            obj.LogNullStatus();
         }
     }
 }

@@ -1,4 +1,5 @@
 using UnityEngine;
+using Assets.Scripts.Utility;
 
 public class PlayerController : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _rotateSpeed;
     [SerializeField] private float _jumpForce;
     [SerializeField] private float _gravityModifier;
+    [SerializeField] private float _gravityWhenGrounded; // Must be negative
 
     private Vector3 _moveDirection;
 
@@ -37,11 +39,11 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         _charController = GetComponent<CharacterController>();
-        NullChecker.Check(_charController);
+        _charController.LogNullStatus();
 
         _knockBackTimedAction = gameObject.AddComponent<TimedAction>();
-        NullChecker.Check(_knockBackTimedAction);
-        
+        _knockBackTimedAction.LogNullStatus();
+
         _moveDirection = Vector3.zero;
 
         _cam = Camera.main;
@@ -78,6 +80,7 @@ public class PlayerController : MonoBehaviour
             {
                 _moveDirection.y = _jumpForce;
             }
+            else _moveDirection.y = _gravityWhenGrounded;
         }
         else
         {
