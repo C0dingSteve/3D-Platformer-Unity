@@ -23,7 +23,7 @@ public class GameManager: MonoBehaviour
 
     [SerializeField] private UIManager _uiManager;
     [SerializeField] private HealthManager _healthManger;
-    [SerializeField] private PlayerSpawnManager _playerSpawnManager;
+    [SerializeField] private CheckpointController _playerSpawnManager;
 
     void Start()
     {

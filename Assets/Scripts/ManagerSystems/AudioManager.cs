@@ -3,7 +3,7 @@ using UnityEditor;
 using UnityEngine;
 
 [RequireComponent(typeof(AudioDataFactory))]
-public class AudioManger : MonoBehaviour
+public class AudioManager : MonoBehaviour
 {
     private AudioDataFactory _audioDataFactory;
     private AudioData[] _audioDataList;

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerSpawnManager : MonoBehaviour
+public class CheckpointController : MonoBehaviour
 {
     public Vector3 SpawnPoint { get; set; } = Vector3.zero;
 
