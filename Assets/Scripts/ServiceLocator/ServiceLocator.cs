@@ -5,33 +5,27 @@ namespace Assets.Scripts.ServiceLocator
 {
     public static class ServiceLocator
     {
-        private static readonly IDictionary<Type, object> Services = new Dictionary<Type, object>();
+        private static readonly IDictionary<Type, object> GlobalServices = new Dictionary<Type, object>();
+        private static readonly IDictionary<Type, object> LocalServices = new Dictionary<Type, object>();
 
-        public static void RegisterService<T>(T service)
+        public static void Register<T>(T service, bool isGlobal = false)
         {
-            try
-            {
-                if(!Services.ContainsKey(typeof(T)))
-                {
-                    Services[typeof(T)] = service;
-                }
-            }
-            catch
-            {
+            var targetDict = isGlobal ? GlobalServices:LocalServices;
+            
+            if(!targetDict.ContainsKey(typeof(T)))
                 throw new ArgumentException($"Service of type {typeof(T)} already exists");
-            }
+
+            targetDict[typeof(T)] = service;
         }
 
-        public static T GetService<T>()
+        public static T Get<T>()
         {
-            try
-            {
-                return (T) Services[typeof(T)];
-            }
-            catch
-            {
-                throw new ArgumentException($"Service of type {typeof(T)} not found");
-            }
+            if(LocalServices.TryGetValue(typeof(T), out object localService)) return (T) localService;
+            if(GlobalServices.TryGetValue(typeof(T), out object globalService)) return (T) globalService;
+
+            throw new ArgumentException($"Service of type {typeof(T)} not found");
         }
+
+        public static void ClearLocalServices() => LocalServices.Clear();
     }
 }
