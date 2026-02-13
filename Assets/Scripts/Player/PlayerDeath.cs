@@ -2,26 +2,21 @@ using UnityEngine;
 using Assets.Scripts.Utility;
 
 [RequireComponent(typeof(HealthManager))]
-public class DeathHandler : HealthEventSubscriber
+public class PlayerDeath : HealthEventSubscriber
 {
     [SerializeField] private GameObject _playerDeathFX;
-    private InvincibilityEffect _invincibilityEffect;
-    private HealthManager _healthManager;
+    private PlayerInvincibleEffect _invincibilityEffect;
 
     private void Awake()
     {
-        _invincibilityEffect = GetComponent<InvincibilityEffect>();
+        _invincibilityEffect = GetComponent<PlayerInvincibleEffect>();
         _invincibilityEffect.LogNullStatus();
-
-        _healthManager = GetComponent<HealthManager>();
-        _healthManager.LogNullStatus();
     }
 
     void OnTriggerEnter(Collider coll)
     {
         if (coll.gameObject.CompareTag("KillZone"))
         {
-            //HealthManager.Instance.Kill();
             GetComponent<HealthManager>().Kill();
         }
     }

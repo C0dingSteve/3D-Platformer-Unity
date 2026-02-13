@@ -1,4 +1,5 @@
 using UnityEngine;
+using Assets.Scripts.ServiceLocator;
 
 public class Checkpoint : MonoBehaviour
 {
@@ -15,7 +16,7 @@ public class Checkpoint : MonoBehaviour
         SendMessageUpwards(nameof(CheckpointController.DeactivateAllCheckpoints), SendMessageOptions.RequireReceiver);
         _pfx?.SetActive(true); // After SendMessageUpwards, need to overwrite to activate the real checkpoint
 
-        GameManager.Instance?.SetSpawnPoint(transform.position);
+        ServiceLocator.Get<GameManager>().SetSpawnPoint(transform.position);
     }
 
     public void Deactivate() => _pfx?.SetActive(false);

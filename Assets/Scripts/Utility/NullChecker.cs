@@ -8,7 +8,7 @@ namespace Assets.Scripts.Utility
         public static void LogNullStatus<T>(this T obj) where T : Object
         {
             if (obj == null) Debug.Log($"Object of type {typeof(T).FullName} is null");
-            else Debug.Log($"{obj} is not null");
+            //else Debug.Log($"{obj} is not null");
         }
     }
 }

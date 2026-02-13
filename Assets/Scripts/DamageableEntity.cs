@@ -4,17 +4,17 @@ using UnityEngine;
 [RequireComponent(typeof(HealthManager))]
 public class DamageableEntity : MonoBehaviour
 {
-    [SerializeField] private InvincibilityEffect _invincibilityEffect;
+    [SerializeField] private PlayerInvincibleEffect _playerInvincibleEffect;
 
     private void Awake()
     {
-        if (!_invincibilityEffect.IsNull())
-            _invincibilityEffect = GetComponent<InvincibilityEffect>();
+        if (_playerInvincibleEffect.IsNull() == null)
+            _playerInvincibleEffect = GetComponent<PlayerInvincibleEffect>();
     }
 
     public void ApplyDamage(int amount)
     {
-        if (!_invincibilityEffect.IsNull() || _invincibilityEffect.IsCurrentlyInvincible)
+        if (_playerInvincibleEffect.IsNull() == null || _playerInvincibleEffect.IsCurrentlyInvincible)
             return;
 
         GetComponent<HealthManager>().TakeDamage(amount);

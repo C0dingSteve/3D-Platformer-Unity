@@ -1,6 +1,8 @@
 using Assets.Scripts.Utility;
+using UnityEngine;
 
-public class HealEffect : HealthEventSubscriber
+[RequireComponent(typeof(HealthManager))]
+public class PlayerHeal : HealthEventSubscriber
 {
     private TimedAction _healAction;
 

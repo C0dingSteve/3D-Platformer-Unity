@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using Assets.Scripts.Utility;
 
-public class InvincibilityEffect : HealthEventSubscriber
+public class PlayerInvincibleEffect : HealthEventSubscriber
 {
     [Header("Invincibility")]
     [SerializeField] GameObject[] _playerPieces;

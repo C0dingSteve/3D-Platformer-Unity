@@ -1,6 +1,7 @@
 using Cinemachine;
 using UnityEngine;
 
+[RequireComponent(typeof(CinemachineBrain))]
 public class CameraController : MonoBehaviour
 {
     public static CameraController Instance;

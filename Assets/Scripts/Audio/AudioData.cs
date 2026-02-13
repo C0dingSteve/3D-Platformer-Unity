@@ -11,9 +11,4 @@ public class AudioData : ScriptableObject
     public AudioClip audioClip;
     public AudioClipType audioType;
     public float volume = 1.0f;
-
-    public void PlayAudio(Vector3 position)
-    {
-        AudioSource.PlayClipAtPoint(audioClip, position, volume);
-    }
 }

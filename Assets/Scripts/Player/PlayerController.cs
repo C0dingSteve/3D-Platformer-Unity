@@ -3,8 +3,6 @@ using Assets.Scripts.Utility;
 
 public class PlayerController : MonoBehaviour
 {
-    public static PlayerController Instance;
-
     [SerializeField] private float _moveSpeed;
     [SerializeField] private float _rotateSpeed;
     [SerializeField] private float _jumpForce;
@@ -22,19 +20,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Vector2 _knockBackVelocity;
 
     private TimedAction _knockBackTimedAction;
-
-    private void Awake()
-    {
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else if (Instance != this)
-        {
-            Destroy(gameObject);
-        }
-    }
 
     void Start()
     {

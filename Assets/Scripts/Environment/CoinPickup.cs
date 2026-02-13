@@ -1,4 +1,5 @@
 using UnityEngine;
+using Assets.Scripts.ServiceLocator;
 
 public class CoinPickup : PickupItem
 {
@@ -8,7 +9,8 @@ public class CoinPickup : PickupItem
     {
         if (other.CompareTag("Player"))
         {
-            GameManager.Instance.AddMoney(_amount);
+            ServiceLocator.Get<GameManager>().AddMoney(_amount);
+            ServiceLocator.Get<UIManager>().UpdateMoney(_amount);
             EndEffect();
         }    
     }

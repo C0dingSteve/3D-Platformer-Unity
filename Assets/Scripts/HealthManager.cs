@@ -1,10 +1,9 @@
 using System;
+using Assets.Scripts.ServiceLocator;
 using UnityEngine;
 
 public class HealthManager: MonoBehaviour
 {
-    public static HealthManager Instance { get; private set; }
-
     [SerializeField] private int _currentHealth, _maxHealth = 5;
     public int CurrentHealth => _currentHealth;
     public int MaxHealth => _maxHealth;
@@ -14,23 +13,7 @@ public class HealthManager: MonoBehaviour
     public event Action<int> OnHealed;
     public event Action OnDeath;
 
-    private void Awake()
-    {
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else if (Instance != this)
-        {
-            Destroy(gameObject);
-        }
-    }
-
-    private void Start()
-    {
-        _currentHealth = _maxHealth;
-    }
+    private void Start() => _currentHealth = _maxHealth;
 
     public void TakeDamage(int damageAmount)
     {
@@ -44,7 +27,8 @@ public class HealthManager: MonoBehaviour
     {
         _currentHealth = 0;
         OnDeath?.Invoke();
-        GameManager.Instance.Respawn();
+        // GameManager.Instance.Respawn();
+        ServiceLocator.Get<GameManager>().Respawn();
     }
 
     public void Heal(int healAmount)
