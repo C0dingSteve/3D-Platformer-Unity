@@ -59,13 +59,13 @@ public class AudioDataFactory : MonoBehaviour
             if (AssetDatabase.LoadAssetAtPath<AudioData>(audioDataPath) != null) continue;
 
             AudioData audioData = ScriptableObject.CreateInstance<AudioData>();
-            audioData.audioClip = clip;
+            audioData.clip = clip;
             audioData.name = clip.name;
 
             if (clipPath.StartsWith(MusicFolder))
-                audioData.audioType = AudioClipType.BACKGROUND;
+                audioData.clipType = AudioClipType.BACKGROUND;
             else if (clipPath.StartsWith(SfxFolder))
-                audioData.audioType = AudioClipType.SFX;
+                audioData.clipType = AudioClipType.SFX;
 
             // Create the asset in the specified folder
             AssetDatabase.CreateAsset(audioData, audioDataPath);

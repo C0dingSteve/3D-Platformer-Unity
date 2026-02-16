@@ -1248,10 +1248,10 @@ GameObject:
   - component: {fileID: 7710877709946326990}
   - component: {fileID: 3796582036409796524}
   - component: {fileID: 5150846045724784238}
+  - component: {fileID: 3879903533034150325}
   - component: {fileID: 394780225797674274}
   - component: {fileID: 1133374975469346006}
   - component: {fileID: 6581247448298891810}
-  - component: {fileID: 3879903533034150325}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1335,7 +1335,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cd0b5b6b7da5a3499d17fb7d427279a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _invincibilityEffect: {fileID: 394780225797674274}
+  _playerInvincibleEffect: {fileID: 0}
+--- !u!114 &3879903533034150325
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3981094403467604528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8da75a73824f34249896015386a47da7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _currentHealth: 0
+  _maxHealth: 5
 --- !u!114 &394780225797674274
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1386,20 +1400,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerDeathFX: {fileID: 8911325350065596923, guid: 1e0bd5f865d9af54f934e97ff70a1a21, type: 3}
---- !u!114 &3879903533034150325
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3981094403467604528}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8da75a73824f34249896015386a47da7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _currentHealth: 0
-  _maxHealth: 5
 --- !u!1 &4022993568246920886
 GameObject:
   m_ObjectHideFlags: 0

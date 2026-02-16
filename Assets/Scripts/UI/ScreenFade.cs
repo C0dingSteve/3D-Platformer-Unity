@@ -7,11 +7,7 @@ public class ScreenFade: Transition
     private Image _blackScreen;
     private Color _screenColor;
 
-    protected override void Awake()
-    {
-        base.Awake();
-        CreateAndSetupOverlay();
-    }
+    private void Start() => CreateAndSetupOverlay();
 
     private void CreateAndSetupOverlay()
     {

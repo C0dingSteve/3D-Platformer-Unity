@@ -3,8 +3,11 @@ using Assets.Scripts.ServiceLocator;
 
 public class Checkpoint : MonoBehaviour
 {
-    [SerializeField] private GameObject _pfx;
- 
+    [SerializeField] private GameObject _pfx;    
+    private GameManager _gameManager;
+
+    private void Awake() => _gameManager = ServiceLocator.Get<GameManager>();
+    
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -16,7 +19,7 @@ public class Checkpoint : MonoBehaviour
         SendMessageUpwards(nameof(CheckpointController.DeactivateAllCheckpoints), SendMessageOptions.RequireReceiver);
         _pfx?.SetActive(true); // After SendMessageUpwards, need to overwrite to activate the real checkpoint
 
-        ServiceLocator.Get<GameManager>().SetSpawnPoint(transform.position);
+        _gameManager.SetSpawnPoint(transform.position);
     }
 
     public void Deactivate() => _pfx?.SetActive(false);

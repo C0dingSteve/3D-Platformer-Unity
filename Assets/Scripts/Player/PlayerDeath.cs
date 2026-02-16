@@ -7,8 +7,9 @@ public class PlayerDeath : HealthEventSubscriber
     [SerializeField] private GameObject _playerDeathFX;
     private PlayerInvincibleEffect _invincibilityEffect;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         _invincibilityEffect = GetComponent<PlayerInvincibleEffect>();
         _invincibilityEffect.LogNullStatus();
     }

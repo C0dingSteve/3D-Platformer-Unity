@@ -8,7 +8,7 @@ public enum AudioClipType
 [CreateAssetMenu(fileName = "AudioData", menuName = "ScriptableObject/AudioData")]
 public class AudioData : ScriptableObject
 {
-    public AudioClip audioClip;
-    public AudioClipType audioType;
+    public AudioClip clip;
+    public AudioClipType clipType;
     public float volume = 1.0f;
 }

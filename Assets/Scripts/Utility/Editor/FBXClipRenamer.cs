@@ -22,19 +22,19 @@ public static class EditorUtilityExtensions
     }
 }
 
-public class FBXClipRenamer : EditorWindow
+public class FBXAnimationClipRenamer : EditorWindow
 {
     private List<string> fbxFilePaths = new List<string>();
 
-    [MenuItem("Tools/FBX Clip Renamer")]
+    [MenuItem("Tools/Animation/FBX Animation Clip Renamer")]
     public static void ShowWindow()
     {
-        GetWindow<FBXClipRenamer>("FBX Clip Renamer");
+        GetWindow<FBXAnimationClipRenamer>("FBX Animation Clip Renamer");
     }
 
     private void OnGUI()
     {
-        GUILayout.Label("FBX Clip Renamer", EditorStyles.boldLabel);
+        GUILayout.Label("FBX Animation Clip Renamer", EditorStyles.boldLabel);
 
         // File path selection
         EditorGUILayout.BeginHorizontal();

@@ -1,5 +1,6 @@
 using UnityEngine;
 using Assets.Scripts.Utility;
+using Assets.Scripts.ServiceLocator;
 
 public class PlayerController : MonoBehaviour
 {
@@ -21,7 +22,7 @@ public class PlayerController : MonoBehaviour
 
     private TimedAction _knockBackTimedAction;
 
-    void Start()
+    private void Awake()
     {
         _charController = GetComponent<CharacterController>();
         _charController.LogNullStatus();
@@ -29,6 +30,11 @@ public class PlayerController : MonoBehaviour
         _knockBackTimedAction = gameObject.AddComponent<TimedAction>();
         _knockBackTimedAction.LogNullStatus();
 
+        ServiceLocator.Register(this);
+    }
+
+    private void Start()
+    {
         _moveDirection = Vector3.zero;
 
         _cam = Camera.main;

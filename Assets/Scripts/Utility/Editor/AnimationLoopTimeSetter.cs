@@ -3,7 +3,7 @@ using UnityEditor;
 
 public class AnimationLoopTimeSetterEditor : EditorWindow
 {
-    [MenuItem("Tools/Set Animation Loop Time")]
+    [MenuItem("Tools/Animation/Set Animation Loop Time")]
     public static void ShowWindow()
     {
         GetWindow<AnimationLoopTimeSetterEditor>("Animation Loop Time Setter");

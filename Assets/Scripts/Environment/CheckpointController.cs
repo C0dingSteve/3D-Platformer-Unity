@@ -1,3 +1,4 @@
+using Assets.Scripts.ServiceLocator;
 using UnityEngine;
 
 public class CheckpointController : MonoBehaviour
@@ -10,6 +11,7 @@ public class CheckpointController : MonoBehaviour
     {
         _checkpoints = gameObject.GetComponentsInChildren<Checkpoint>();
         if (_checkpoints.Length <= 0) Debug.Log("No checkpoints found");
+        ServiceLocator.Register(this);
     }
 
     public void DeactivateAllCheckpoints()

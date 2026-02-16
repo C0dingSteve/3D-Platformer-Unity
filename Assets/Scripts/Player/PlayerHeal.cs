@@ -6,8 +6,9 @@ public class PlayerHeal : HealthEventSubscriber
 {
     private TimedAction _healAction;
 
-    void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         _healAction = gameObject.AddComponent<TimedAction>();
         _healAction.LogNullStatus();
     }

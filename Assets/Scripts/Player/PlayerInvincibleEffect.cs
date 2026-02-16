@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using Assets.Scripts.Utility;
 
+[RequireComponent(typeof(PlayerController))]
 public class PlayerInvincibleEffect : HealthEventSubscriber
 {
     [Header("Invincibility")]
@@ -15,8 +16,9 @@ public class PlayerInvincibleEffect : HealthEventSubscriber
     [Header("Knockback")]
     private PlayerController _playerController; // Reference to PlayerController on *this* GameObject
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         _invincibilityTimedAction = gameObject.AddComponent<TimedAction>();
         _invincibilityTimedAction.LogNullStatus();
 

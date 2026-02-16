@@ -9,13 +9,26 @@ public class GameHUD: MonoBehaviour, IGameHUD
     [SerializeField] private TMP_Text _moneyText;
 
     private HealthManager _healthManager;
+    private GameManager _gameManager;
 
-    public void Initialize()
+    private void Awake()
     {
-        gameObject.AddComponent<HealthHUDBridge>();
         _healthManager = ServiceLocator.Get<HealthManager>();
+        _gameManager = ServiceLocator.Get<GameManager>();
+
+        gameObject.AddComponent<HealthHUDBridge>();
+        
+        UpdateGameHUD(_healthManager.MaxHealth, _gameManager.Money);
+        
+        ServiceLocator.Register(this);
     }
     
+    public void UpdateGameHUD(int health, int money)
+    {
+        UpdateHealth(health);
+        UpdateMoney(money);
+    }
+
     public void UpdateHealth(int health) => _healthText.text = $"{health}/{_healthManager.MaxHealth}";
     public void UpdateMoney(int amount) => _moneyText.text = amount.ToString();
 }

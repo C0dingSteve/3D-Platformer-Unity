@@ -13,8 +13,12 @@ public class HealthManager: MonoBehaviour
     public event Action<int> OnHealed;
     public event Action OnDeath;
 
-    private void Start() => _currentHealth = _maxHealth;
-
+    private void Awake()
+    {
+        _currentHealth = _maxHealth;
+        ServiceLocator.Register(this);
+    }
+    
     public void TakeDamage(int damageAmount)
     {
         _currentHealth = Mathf.Clamp(_currentHealth - damageAmount, 0, _maxHealth);
@@ -27,7 +31,6 @@ public class HealthManager: MonoBehaviour
     {
         _currentHealth = 0;
         OnDeath?.Invoke();
-        // GameManager.Instance.Respawn();
         ServiceLocator.Get<GameManager>().Respawn();
     }
 

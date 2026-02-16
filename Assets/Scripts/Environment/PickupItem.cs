@@ -7,7 +7,6 @@ public abstract class PickupItem : MonoBehaviour
     public string PickupType { get; protected set; }
 
     [SerializeField] protected GameObject _destroyFX;
-    
     [SerializeField] protected GameObject _activeFX; // In case we wanna add some kind of active pfx
 
     [SerializeField] private bool _canSpin = false; 
