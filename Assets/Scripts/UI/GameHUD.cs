@@ -13,14 +13,14 @@ public class GameHUD: MonoBehaviour, IGameHUD
 
     private void Awake()
     {
+        ServiceLocator.Register(this);
+
         _healthManager = ServiceLocator.Get<HealthManager>();
         _gameManager = ServiceLocator.Get<GameManager>();
 
         gameObject.AddComponent<HealthHUDBridge>();
         
         UpdateGameHUD(_healthManager.MaxHealth, _gameManager.Money);
-        
-        ServiceLocator.Register(this);
     }
     
     public void UpdateGameHUD(int health, int money)

@@ -15,8 +15,8 @@ public class HealthManager: MonoBehaviour
 
     private void Awake()
     {
-        _currentHealth = _maxHealth;
         ServiceLocator.Register(this);
+        _currentHealth = _maxHealth;
     }
     
     public void TakeDamage(int damageAmount)

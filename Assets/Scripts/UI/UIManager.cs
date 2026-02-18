@@ -7,8 +7,8 @@ public class UIManager : MonoBehaviour
 
     private void Awake()
     {
-        _screenFade = gameObject.AddComponent<ScreenFade>();
         ServiceLocator.Register(this);
+        _screenFade = gameObject.AddComponent<ScreenFade>();
     }
 
     public void FadeScreen() => _screenFade.Play();

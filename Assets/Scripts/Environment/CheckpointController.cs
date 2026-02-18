@@ -9,9 +9,10 @@ public class CheckpointController : MonoBehaviour
 
     private void Awake()
     {
+        ServiceLocator.Register(this);
+        
         _checkpoints = gameObject.GetComponentsInChildren<Checkpoint>();
         if (_checkpoints.Length <= 0) Debug.Log("No checkpoints found");
-        ServiceLocator.Register(this);
     }
 
     public void DeactivateAllCheckpoints()

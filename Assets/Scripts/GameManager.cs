@@ -14,13 +14,13 @@ public class GameManager: MonoBehaviour
 
     private void Awake()
     {
+        ServiceLocator.Register(this);
+
         _playerCameraController = ServiceLocator.Get<PlayerCameraController>();
         _playerController = ServiceLocator.Get<PlayerController>();
         _healthManger = ServiceLocator.Get<HealthManager>();
         _checkpointController = ServiceLocator.Get<CheckpointController>();
         _uiManager = ServiceLocator.Get<UIManager>();
-
-        ServiceLocator.Register(this);
     }
     
     private void Start()

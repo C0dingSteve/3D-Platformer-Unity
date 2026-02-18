@@ -24,13 +24,13 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
+        ServiceLocator.Register(this);
+
         _charController = GetComponent<CharacterController>();
         _charController.LogNullStatus();
 
         _knockBackTimedAction = gameObject.AddComponent<TimedAction>();
         _knockBackTimedAction.LogNullStatus();
-
-        ServiceLocator.Register(this);
     }
 
     private void Start()
