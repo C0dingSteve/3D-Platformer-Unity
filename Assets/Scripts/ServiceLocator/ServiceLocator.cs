@@ -15,12 +15,13 @@ namespace Assets.Scripts.ServiceLocator
             
             if(targetDict.TryGetValue(typeof(T), out object existing))
             {
-                if(ReferenceEquals(existing, service)) return;
-
-                Debug.LogWarning($"Service of type {typeof(T)} already exists with a different instance!");
-                return;
+                if(ReferenceEquals(existing, service)) return;    
+                if(existing is UnityEngine.Object unityObj && unityObj != null)
+                {   
+                    Debug.LogWarning($"Service of type {typeof(T)} already exists with a different instance!");
+                    return;
+                }
             }
-
             targetDict[typeof(T)] = service;
         }
 
@@ -47,7 +48,7 @@ namespace Assets.Scripts.ServiceLocator
         public static T Get<T>() where T : Component
         {
             // Check if the service is already cached in our dictionaries
-            if (TryGet(out T service)) return service;
+            if (TryGet(out T service) && service != null) return service;
             
             // Search the hierarchy for instances manually placed in the scene
             service = UnityEngine.Object.FindFirstObjectByType<T>();
@@ -64,7 +65,7 @@ namespace Assets.Scripts.ServiceLocator
 
             // Safety check: The component's Awake() method may self-register 
             // So, we check for existing service once again
-            if (TryGet(out T existingService)) return existingService;
+            if (TryGet(out T existingService) && existingService != null) return existingService;
 
             // If nothing was registerd in the component's awake call 
             // we register the newly created service and return it

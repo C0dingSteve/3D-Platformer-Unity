@@ -40,10 +40,10 @@ public class SceneLoader: BaseSingleton<SceneLoader>
             {
                 SceneManager.LoadScene(buildIndex);
             }
-            else
-            {
-                Debug.LogError($"{gameObject.name} No mapping found for level: {level}");
-            }
+        }
+        else
+        {
+            Debug.LogError($"{gameObject.name} No mapping found for level: {level}");
         }
     }
 

@@ -14,7 +14,7 @@ public class DamageableEntity : MonoBehaviour
 
     public void ApplyDamage(int amount)
     {
-        if (_playerInvincibleEffect.IsNull() == null || _playerInvincibleEffect.IsCurrentlyInvincible)
+        if (_playerInvincibleEffect.IsNull() != null && _playerInvincibleEffect.IsCurrentlyInvincible)
             return;
 
         GetComponent<HealthManager>().TakeDamage(amount);

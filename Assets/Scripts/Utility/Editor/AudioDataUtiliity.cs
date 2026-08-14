@@ -56,7 +56,7 @@ public static class AudioDataUtility
         }
     }
 
-    private static MusicData CreateMusicDataInstance(AudioClip clip, Enum type = Enum.None, float volume = 1f)
+    private static MusicData CreateMusicDataInstance(AudioClip clip, AudioCategory type = AudioCategory.None, float volume = 1f)
     {
         return CreateAudioDataInstance<MusicData>(clip, type, volume);
     }
@@ -72,7 +72,7 @@ public static class AudioDataUtility
         if (data is MusicData musicData)
         {
             musicData.clip = clip;
-            musicData.musicType = (Enum)type;
+            musicData.musicType = (AudioCategory)type;
             musicData.volume = volume;
         }
         else if (data is SfxData sfxData)

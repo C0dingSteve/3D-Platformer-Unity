@@ -84,7 +84,7 @@ public class AudioManager : BaseSingleton<AudioManager>, IAudioManagerService
         _lastPlayedScene = scene.name;
         
         Play(config.musicTracks[0], config.loop);
-        SetVolume(Enum.None, 0.025f);
+        SetVolume(AudioCategory.None, 0.025f);
     }
 
     private void ApplyMusicData(MusicData data, bool changeVolume = false)
@@ -120,11 +120,11 @@ public class AudioManager : BaseSingleton<AudioManager>, IAudioManagerService
 
     public bool IsPlaying(int playbackId) => throw new NotImplementedException();
 
-    public void Mute(Enum type, bool isMuted) => throw new NotImplementedException();
+    public void Mute(AudioCategory type, bool isMuted) => throw new NotImplementedException();
 
     public void Pause(int playbackId)
     {
-        if(_audioSource.clip.GetInstanceID() == playbackId) 
+        if(_audioSource.clip.GetInstanceID() != playbackId) 
             throw new InvalidDataException($"Given ID: ({playbackId}) != AudioSource clip ID: {_audioSource.clip.GetInstanceID()}");
         if(_audioSource.isPlaying)
             _audioSource.Pause();
@@ -145,13 +145,13 @@ public class AudioManager : BaseSingleton<AudioManager>, IAudioManagerService
 
     public void Resume(int playbackId)
     {
-        if(_audioSource.clip.GetInstanceID() == playbackId) 
+        if(_audioSource.clip.GetInstanceID() != playbackId) 
             throw new InvalidDataException($"Given ID: ({playbackId}) != AudioSource clip ID: {_audioSource.clip.GetInstanceID()}");
         if(!_audioSource.isPlaying)
             _audioSource.UnPause();
     }
 
-    public void SetVolume(Enum type, float volume)
+    public void SetVolume(AudioCategory type, float volume)
     {
         // _audioSource.volume = type switch
         // {
@@ -164,5 +164,5 @@ public class AudioManager : BaseSingleton<AudioManager>, IAudioManagerService
 
     public void Stop(int playbackId) => throw new NotImplementedException();
 
-    public void StopAll(Enum type) => throw new NotImplementedException();
+    public void StopAll(AudioCategory type) => throw new NotImplementedException();
 }

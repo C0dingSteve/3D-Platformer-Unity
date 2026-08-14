@@ -7,7 +7,7 @@ public enum SfxType
     Footstep = 4
 }
 
-public enum Enum
+public enum AudioCategory
 {
     None
 }

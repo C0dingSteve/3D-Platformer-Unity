@@ -3,9 +3,9 @@ using UnityEngine;
 public interface IAudioManagerService
 {
     // Category Control
-    void SetVolume(Enum type, float volume);
-    void Mute(Enum type, bool isMuted);
-    void StopAll(Enum type);
+    void SetVolume(AudioCategory type, float volume);
+    void Mute(AudioCategory type, bool isMuted);
+    void StopAll(AudioCategory type);
 
     // Playback (Returns Instance ID for control)
     int Play(IAudioData audioData, bool loop = false);
