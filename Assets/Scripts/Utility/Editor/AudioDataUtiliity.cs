@@ -9,61 +9,81 @@ public static class AudioDataUtility
     
     private const string MUSIC_OUTPUT_FOLDER = "Assets/Resources/AudioData/Music";
     private const string SFX_OUTPUT_FOLDER = "Assets/Resources/AudioData/Sfx";
-    // private const string DIALOGUE_OUTPUT_FOLDER = "Assets/Resources/AudioData/Sfx";
 
     [MenuItem("Tools/Audio/Generate AudioData Assets")]
     public static void GenerateAudioData()
     {
         EnsureFolderExists(MUSIC_OUTPUT_FOLDER);
         EnsureFolderExists(SFX_OUTPUT_FOLDER);
-        // EnsureFolderExists(DIALOGUE_OUTPUT_FOLDER);
 
-        string[] guids = AssetDatabase.FindAssets("t:AudioClip", new[] { MUSIC_FOLDER, SFX_FOLDER });
-
-        foreach (string guid in guids)
-        {
-            string path = AssetDatabase.GUIDToAssetPath(guid);
-            AudioClip clip = AssetDatabase.LoadAssetAtPath<AudioClip>(path);
-            AudioClipType clipType = GetAudioClipType(path);
-            
-            string assetPath = clipType switch
-            {
-                AudioClipType.MUSIC => Path.Combine(MUSIC_OUTPUT_FOLDER, $"{clip.name}.asset"),
-                AudioClipType.SFX => Path.Combine(SFX_OUTPUT_FOLDER, $"{clip.name}.asset"),
-                // AudioClipType.DIALOGUE => Path.Combine(DIALOGUE_OUTPUT_FOLDER, $"{clip.name}.asset"),
-                _ => string.Empty
-            };
-
-            // if (AssetDatabase.LoadAssetAtPath<AudioData>(assetPath) != null) continue;
-            if (assetPath == string.Empty) continue;
-
-            AudioData data = CreateAudioDataInstance(clip, clipType);
-            
-            AssetDatabase.CreateAsset(data, assetPath);
-        }
+        GenerateAssetsForFolder(MUSIC_FOLDER, MUSIC_OUTPUT_FOLDER);
+        GenerateAssetsForFolder(SFX_FOLDER, SFX_OUTPUT_FOLDER);
 
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
         Debug.Log("Batch AudioData generation complete.");
     }
 
-    private static AudioData CreateAudioDataInstance(AudioClip clip, AudioClipType clipType, float volume = 1f)
+    private static void GenerateAssetsForFolder(string folderPath, string outputFolder)
     {
-        AudioData data = ScriptableObject.CreateInstance<AudioData>();
-        data.clip = clip;
-        data.clipType = clipType;
-        data.name = clip.name;
-        data.volume = volume;
-
-        return data;
+        var guids = AssetDatabase.FindAssets("t:AudioClip", new[] { folderPath });
+        foreach (var guid in guids)
+        {
+            CreateAndSaveAsset(guid, outputFolder);
+        }
     }
 
-    private static AudioClipType GetAudioClipType(string path)
+    private static void CreateAndSaveAsset(string guid, string outputFolder)
     {
-        if(path.StartsWith(MUSIC_FOLDER)) return AudioClipType.MUSIC;
-        if(path.StartsWith(SFX_FOLDER)) return AudioClipType.SFX;
+        var clip = AssetDatabase.LoadAssetAtPath<AudioClip>(AssetDatabase.GUIDToAssetPath(guid));
+        if (clip == null) return;
 
-        throw new InvalidDataException($"Invalid Path: {path}");
+        string assetPath = Path.Combine(outputFolder, $"{clip.name}.asset");
+        ScriptableObject data = outputFolder switch
+        {
+            MUSIC_OUTPUT_FOLDER => CreateMusicDataInstance(clip),
+            SFX_OUTPUT_FOLDER => CreateSfxDataInstance(clip),
+            _ => null            
+        };
+
+        if (data != null)
+        {
+            AssetDatabase.CreateAsset(data, assetPath);
+        }
+        else
+        {
+            Debug.LogError("Failed to create Music/Sfx Data");
+        }
+    }
+
+    private static MusicData CreateMusicDataInstance(AudioClip clip, Enum type = Enum.None, float volume = 1f)
+    {
+        return CreateAudioDataInstance<MusicData>(clip, type, volume);
+    }
+
+    private static SfxData CreateSfxDataInstance(AudioClip clip, SfxType type = SfxType.None, float volume = 1f)
+    {
+        return CreateAudioDataInstance<SfxData>(clip, type, volume, true);
+    }
+
+    private static T CreateAudioDataInstance<T>(AudioClip clip, System.Enum type, float volume, bool isSfx = false) where T : ScriptableObject
+    {
+        var data = ScriptableObject.CreateInstance<T>();
+        if (data is MusicData musicData)
+        {
+            musicData.clip = clip;
+            musicData.musicType = (Enum)type;
+            musicData.volume = volume;
+        }
+        else if (data is SfxData sfxData)
+        {
+            sfxData.clips = new AudioClip[] { clip };
+            sfxData.sfxType = (SfxType)type;
+            sfxData.volume = volume;
+        }
+        data.name = clip.name;
+
+        return data;
     }
 
     private static void EnsureFolderExists(string path)

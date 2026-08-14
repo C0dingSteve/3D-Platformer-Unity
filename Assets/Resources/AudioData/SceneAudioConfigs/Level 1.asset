@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sceneAsset: {fileID: 102900000, guid: 4438a2bee268df04dbbea653cf63b298, type: 3}
   sceneName: Level 1
-  sceneAudioDatas:
+  musicTracks:
   - {fileID: 11400000, guid: 0f2715173c3d4c54ba41ecac5091ee74, type: 2}
+  - {fileID: 11400000, guid: 621b7e4c2697a2945b06f26f1ab4179c, type: 2}
   loop: 1

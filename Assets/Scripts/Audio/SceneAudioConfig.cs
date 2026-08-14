@@ -16,7 +16,7 @@ public class SceneAudioConfig: ScriptableObject
     [HideInInspector]
     public string sceneName;
 
-    public AudioData[] sceneAudioDatas;
+    public MusicData[] musicTracks;
     public bool loop = true;
 
     private void OnValidate()

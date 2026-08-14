@@ -8,7 +8,7 @@ using System.Linq;
 
 public class AudioManager : BaseSingleton<AudioManager>, IAudioManagerService
 {
-    private AudioData[] _sfxDataArray;
+    private SfxData[] _sfxDataArray;
 
     private AudioSource _audioSource;
 
@@ -19,14 +19,14 @@ public class AudioManager : BaseSingleton<AudioManager>, IAudioManagerService
     {
         ServiceLocator.Register(this);
 
-        _sfxDataArray = Resources.LoadAll<AudioData>("AudioData/Sfx");
-
         _audioSource = gameObject.AddComponent<AudioSource>();
 
-        SceneManager.sceneLoaded += OnSceneLoaded;
+        _sfxDataArray = Resources.LoadAll<SfxData>("AudioData/Sfx");
         _sceneMusicDict = Resources
                             .LoadAll<SceneAudioConfig>("AudioData/SceneAudioConfigs")
                             .ToDictionary(item => item.sceneName, item => item);
+
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
     private void OnDisable() => SceneManager.sceneLoaded -= OnSceneLoaded;
 
@@ -68,7 +68,7 @@ public class AudioManager : BaseSingleton<AudioManager>, IAudioManagerService
             return;
         }
 
-        if(config.sceneAudioDatas == null || config.sceneAudioDatas.Length == 0)
+        if(config.musicTracks == null || config.musicTracks.Length == 0)
         {
             Debug.LogError($"Scene Audio Data Not Valid");
             return;
@@ -77,35 +77,50 @@ public class AudioManager : BaseSingleton<AudioManager>, IAudioManagerService
         if(_audioSource.clip != null)
         {
             // Implement and use IsPlaying() here later
-            bool isAlreadyPlaying = config.sceneAudioDatas.Any(data => data.clip == _audioSource.clip);
+            bool isAlreadyPlaying = config.musicTracks.Any(data => data.clip == _audioSource.clip);
             if(isAlreadyPlaying) return;
         }
 
         _lastPlayedScene = scene.name;
         
-        Play(config.sceneAudioDatas[0], config.loop);
-        SetVolume(AudioClipType.MUSIC, 0.025f);
+        Play(config.musicTracks[0], config.loop);
+        SetVolume(Enum.None, 0.025f);
     }
 
-    private void ApplyAudioData(AudioData data, bool changeVolume = false)
+    private void ApplyMusicData(MusicData data, bool changeVolume = false)
     {
         _audioSource.clip = data.clip;
         
         // Reset spatial blend to 2D by default unless PlayAtPoint overrides it
         _audioSource.spatialBlend = 0;
         
-        if(changeVolume) SetVolume(data.clipType, data.volume);
+        if(changeVolume) SetVolume(data.musicType, data.volume);
+    }
+
+    private int PlayMusic(MusicData data, bool loop)
+    {
+        ApplyMusicData(data, changeVolume: true);
+        
+        _audioSource.loop = loop;
+        _audioSource.Play();
+
+        return _audioSource.clip.GetInstanceID();
+    }
+
+    private int PlaySfx(SfxData data)
+    {
+        throw new NotImplementedException();
     }
 
     // +++++++++++++++ Interface Implementation +++++++++++++++ 
 
-    public void FadeIn(AudioData data, float duration) => throw new NotImplementedException();
+    public void FadeIn(IAudioData data, float duration) => throw new NotImplementedException();
 
     public void FadeOut(int playbackId, float duration) => throw new NotImplementedException();
 
     public bool IsPlaying(int playbackId) => throw new NotImplementedException();
 
-    public void Mute(AudioClipType type, bool isMuted) => throw new NotImplementedException();
+    public void Mute(Enum type, bool isMuted) => throw new NotImplementedException();
 
     public void Pause(int playbackId)
     {
@@ -115,17 +130,12 @@ public class AudioManager : BaseSingleton<AudioManager>, IAudioManagerService
             _audioSource.Pause();
     }
 
-    public int Play(AudioData data, bool loop = false)
+    public int Play(IAudioData data, bool loop = false)
     {
-        ApplyAudioData(data, changeVolume: true);
-        
-        _audioSource.loop = loop;
-        _audioSource.Play();
-
-        return _audioSource.clip.GetInstanceID();
+        return PlayMusic((MusicData)data, loop);
     }
 
-    public int PlayAtPoint(AudioData data, Vector3 position, float spatialBlend = 1)
+    public int PlayAtPoint(IAudioData data, Vector3 position, float spatialBlend = 1)
     {
         _audioSource.transform.position = position;
         _audioSource.spatialBlend = spatialBlend;
@@ -141,17 +151,18 @@ public class AudioManager : BaseSingleton<AudioManager>, IAudioManagerService
             _audioSource.UnPause();
     }
 
-    public void SetVolume(AudioClipType type, float volume)
+    public void SetVolume(Enum type, float volume)
     {
-        _audioSource.volume = type switch
-        {
-            AudioClipType.MUSIC => volume * 0.6f,
-            AudioClipType.SFX => volume,
-            _ => throw new InvalidDataException($"Invalid Audio Type: {type}")
-        };
+        // _audioSource.volume = type switch
+        // {
+        //     AudioClipType.MUSIC => volume * 0.6f,
+        //     AudioClipType.SFX => volume,
+        //     _ => throw new InvalidDataException($"Invalid Audio Type: {type}")
+        // };
+        _audioSource.volume = volume * 0.6f;
     }
 
     public void Stop(int playbackId) => throw new NotImplementedException();
 
-    public void StopAll(AudioClipType type) => throw new NotImplementedException();
+    public void StopAll(Enum type) => throw new NotImplementedException();
 }

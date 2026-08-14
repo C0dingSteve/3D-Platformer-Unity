@@ -9,9 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31bdde29e5b51904aa88795be1ba797f, type: 3}
+  m_Script: {fileID: 11500000, guid: c50224bb11a7c924d8f330fe95bb72b8, type: 3}
   m_Name: MellowTron
   m_EditorClassIdentifier: 
+  musicType: 0
   clip: {fileID: 8300000, guid: 88658f61ab7226e4da72a29a6436e0f3, type: 3}
-  clipType: 0
+  loop: 1
   volume: 1

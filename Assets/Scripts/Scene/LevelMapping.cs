@@ -4,11 +4,11 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 [CreateAssetMenu(fileName = "LevelMapping", menuName = "ScriptableObject/Level Mapping")]
-public class LevelMapping: ScriptableObject
+public class LevelMapping: ScriptableObject, ISerializationCallbackReceiver
 {
     [SerializeField]
     private List<LevelEntry> _levelEntries = new();
-    
+
     public Dictionary<GameLevel, int> LevelBuildIndexMapping {get; private set;} = new();
 
     public void OnAfterDeserialize() => SyncDictionary();
@@ -20,7 +20,7 @@ public class LevelMapping: ScriptableObject
             LevelBuildIndexMapping[entry.level] = entry.buildIndex;
     }
 
-    public void OnBeforeDeserialize() { }
+    public void OnBeforeSerialize() { }
 
 #if UNITY_EDITOR
     public void OnValidate()

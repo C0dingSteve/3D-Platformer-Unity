@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Level 2
   m_EditorClassIdentifier: 
   sceneAsset: {fileID: 102900000, guid: c63e960c1f0f1154e94ca4041c18622a, type: 3}
-  sceneName: Game 1
-  sceneAudioDatas:
-  - {fileID: 11400000, guid: 621b7e4c2697a2945b06f26f1ab4179c, type: 2}
+  sceneName: Level 2
+  musicTracks:
+  - {fileID: 11400000, guid: 0f2715173c3d4c54ba41ecac5091ee74, type: 2}
+  - {fileID: 11400000, guid: 88c101344b20b4c49ae99900ce82cdd4, type: 2}
   loop: 1

@@ -3,13 +3,13 @@ using UnityEngine;
 public interface IAudioManagerService
 {
     // Category Control
-    void SetVolume(AudioClipType type, float volume);
-    void Mute(AudioClipType type, bool isMuted);
-    void StopAll(AudioClipType type);
+    void SetVolume(Enum type, float volume);
+    void Mute(Enum type, bool isMuted);
+    void StopAll(Enum type);
 
     // Playback (Returns Instance ID for control)
-    int Play(AudioData data, bool loop = false);
-    int PlayAtPoint(AudioData data, Vector3 position, float spatialBlend = 1.0f);
+    int Play(IAudioData audioData, bool loop = false);
+    int PlayAtPoint(IAudioData audioData, Vector3 position, float spatialBlend = 1.0f);
 
     // Instance Control
     void Stop(int playbackId);
@@ -19,5 +19,5 @@ public interface IAudioManagerService
 
     // Transitions
     void FadeOut(int playbackId, float duration);
-    void FadeIn(AudioData data, float duration);
+    void FadeIn(IAudioData data, float duration);
 }

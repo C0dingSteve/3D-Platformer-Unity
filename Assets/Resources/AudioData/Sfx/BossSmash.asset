@@ -9,9 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31bdde29e5b51904aa88795be1ba797f, type: 3}
+  m_Script: {fileID: 11500000, guid: 57eaa39ccb3bef14ea722a41cf3f98f4, type: 3}
   m_Name: BossSmash
   m_EditorClassIdentifier: 
-  clip: {fileID: 8300000, guid: 7dcdba50bb2911d4e946c253756b3189, type: 3}
-  clipType: 1
+  sfxType: 0
+  clips:
+  - {fileID: 8300000, guid: 7dcdba50bb2911d4e946c253756b3189, type: 3}
   volume: 1
+  pitchMin: 0.95
+  pitchMax: 1.05
